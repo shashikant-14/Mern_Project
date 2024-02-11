@@ -62,3 +62,10 @@ mongoDB connection string
 
 <!-- Install cors -->
 npm i cors
+
+
+
+<!-- create drontend project -->
+
+npm i -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
