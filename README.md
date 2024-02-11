@@ -57,3 +57,8 @@ mongoDB connection string
 
 
 <!-- -----------Create boooks modal in mongoose------- -->
+
+<!-- express router -->
+
+<!-- Install cors -->
+npm i cors
