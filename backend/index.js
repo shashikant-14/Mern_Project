@@ -41,3 +41,40 @@ mongoose
     .catch((error) => {
         console.error('Server connection failed', error);
     });
+
+    // Define a route to fetch collection names
+app.get('/api/collections', async (req, res) => {
+    try {
+      const collections = await mongoose.connection.db.listCollections().toArray();
+      const collectionNames = collections.map(collection => collection.name);
+  
+      res.status(200).json(collectionNames);
+    } catch (error) {
+      console.error('Error retrieving collections:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  // Define a route to add a new collection
+app.post('/api/addCollection', async (req, res) => {
+    try {
+      const { collectionName } = req.body;
+  
+      // Check if the collection already exists
+      const collections = await mongoose.connection.db.listCollections().toArray();
+      const existingCollections = collections.map(collection => collection.name);
+      if (existingCollections.includes(collectionName)) {
+        return res.status(400).json({ error: 'Collection already exists' });
+      }
+  
+      // Create the new collection
+      console.log(collectionName);
+      await mongoose.connection.db.createCollection(collectionName);
+  
+      res.status(201).json({ message: `Collection '${collectionName}' created successfully` });
+    } catch (error) {
+      console.error('Error creating collection:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  

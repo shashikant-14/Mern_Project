@@ -68,4 +68,7 @@ npm i cors
 <!-- create drontend project -->
 
 npm i -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npx tailwindcss init -p 
+
+
+npm i axios react-icons

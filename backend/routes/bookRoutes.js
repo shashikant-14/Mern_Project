@@ -8,6 +8,7 @@ let router = express.Router();
 router.post('/', async (request, response) => {
     try {
         const { title, author, publishYear } = request.body;
+        console.log(request.body)
 
         if (!title || !author || !publishYear) {
             return response.status(400).json({ message: 'Send all required fields: title, author, publishYear' });
@@ -21,7 +22,7 @@ router.post('/', async (request, response) => {
 
         const book = await Book.create(newBook);
 
-        return response.status(201).json(book);
+        return response.status(201).json({ message: 'Record saved successfully.' });
     } catch (err) {
         console.error(err);
         return response.status(500).json({ message: err.message });
@@ -49,7 +50,7 @@ router.get('/', async (request, response) => {
 });
 
 // Route for searching book by id using route parameter :id
-router.get('//:id', async (request, response) => {
+router.get('/:id', async (request, response) => {
     try {
         const { id } = request.params;
         const book = await Book.findById(id);
@@ -66,11 +67,12 @@ router.get('//:id', async (request, response) => {
 });
 
 // Route for finding book and updating
-router.put('//:id', async (request, response) => {
+router.put('/:id', async (request, response) => {
     try {
         const { id } = request.params;
+        console.log(request);
         const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new: true });
-
+        console.log(updatedBook);
         if (!updatedBook) {
             return response.status(404).json({ error: 'Book not found' });
         }
@@ -83,7 +85,7 @@ router.put('//:id', async (request, response) => {
 });
 
 // Route for deleting book by id
-router.delete('//:id', async (request, response) => {
+router.delete('/:id', async (request, response) => {
     try {
         const { id } = request.params;
         const result = await Book.findByIdAndDelete(id);
